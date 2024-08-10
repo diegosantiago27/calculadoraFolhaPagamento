@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculadora de Folha de Pagamento</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 50px;
+    } 
+
+
+    #output {
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Calculadora de Folha de Pagamento</h1>
+
+  <div>
+    <label for="option">Escolha uma opção:</label>
+    <select id="option">
+      <option value="1">Novo salário</option>
+      <option value="2">Férias</option>
+      <option value="3">Décimo terceiro</option>
+      <option value="4">Sair</option>
+    </select>
+  </div>
+
+  <div>
+    <button onclick="executarOperacao()">Executar</button>
+  </div>
+
+  <div id="output"></div>
+
+  <script>
+    function executarOperacao() {
+      var option = document.getElementById('option').value;
+      var result;
+
+        if (option === '1') {
+            var salarioAtual = parseFloat(prompt('Digite o salário atual:'));
+            result = calcularNovoSalario(salarioAtual);
+        } else if (option === '2') {
+            var salarioFerias = parseFloat(prompt('Digite o salário base para cálculo de férias:'));
+            result = calcularFerias(salarioFerias);
+        } else if (option === '3') {
+            var salarioDecimo = parseFloat(prompt('Digite o salário base para cálculo do décimo terceiro:'));
+            var mesesDecimo = parseFloat(prompt('Digite os meses trabalhados:'));
+                // Verifica se o usuário digitou um número válido de meses (até 12)
+            if (mesesDecimo > 12 || isNaN(mesesDecimo) || mesesDecimo < 1) {
+                result = 'Número de meses inválido. O número de meses deve estar entre 1 e 12.';
+            } else {
+                result = calcularDecimoTerceiro(salarioDecimo, mesesDecimo);
+            }
+        } else if (option === '4') {
+            result = 'Saindo';
+        }
+      document.getElementById('output').innerText = result;
+    }
+
+    function calcularNovoSalario(salarioAtual) {
+        if(salarioAtual <= '1200'){
+            var aumentoPercentualQuinze = 15;
+            var aumentoQuinze = salarioAtual * (aumentoPercentualQuinze / 100);
+            var novoSalarioQuinze = salarioAtual + aumentoQuinze;
+            return 'Novo salário: R$ ' + novoSalarioQuinze.toFixed(2);
+        } else if(salarioAtual > '1200' && salarioAtual <= '2400' ){
+            var aumentoPercentualDez = 10;
+            var aumentoDez = salarioAtual * (aumentoPercentualDez / 100);
+            var novoSalarioDez = salarioAtual + aumentoDez;
+            return 'Novo salário: R$ ' + novoSalarioDez.toFixed(2);
+
+        }else if(salarioAtual > '2400'){
+            var aumentoPercentualCinco = 5;
+            var aumentoCinco = salarioAtual * (aumentoPercentualCinco / 100);
+            var novoSalarioCinco = salarioAtual + aumentoCinco;
+            return 'Novo salário: R$ ' + novoSalarioCinco.toFixed(2);
+        }
+    }
+
+    function calcularFerias(salario) {
+      var ferias = salario / 3;
+      return 'O salario é: ' + salario.toFixed(2) + ' e o valor de férias: R$ ' + ferias.toFixed(2);
+    }
+
+    function calcularDecimoTerceiro(salario, meses) {
+      var decimoTerceiro = salario * meses / 12;
+      return 'Valor do décimo terceiro: R$ ' + decimoTerceiro.toFixed(2);
+    }
+    
+  </script>
+</body>
+</html>
